@@ -24,10 +24,10 @@
 #   go-tests = true
 #   unused-packages = true
 
-
 [[constraint]]
-  branch = "master"
-  name = "github.com/Juniper/go-netconf"
+  branch = "feature/message"
+  name = "github.com/damianoneill/net"
+  source = "github.com/sjames-iberis/net"
 
 [[constraint]]
   name = "github.com/beevik/etree"

@@ -10,6 +10,18 @@
   version = "v1.0.1"
 
 [[projects]]
+  branch = "feature/message"
+  digest = "1:f7e5d9efe7fde35f1622f59ca02a6a5dff639e4623c85a2fb6e29286891bc715"
+  name = "github.com/damianoneill/net"
+  packages = [
+    "netconf",
+    "netconf/rfc6242",
+  ]
+  pruneopts = "UT"
+  revision = "756202d71c1ea84613e88a4459f5d92e744d860d"
+  source = "github.com/sjames-iberis/net"
+
+[[projects]]
   digest = "1:a2c1d0e43bd3baaa071d1b9ed72c27d78169b2b269f71c105ac4ba34b1be4a39"
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
@@ -101,12 +113,28 @@
   version = "v1.2.0"
 
 [[projects]]
+  digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
+
+[[projects]]
   digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   pruneopts = "UT"
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
+
+[[projects]]
+  digest = "1:274f67cb6fed9588ea2521ecdac05a6d62a8c51c074c1fccc6a49a40ba80e925"
+  name = "github.com/satori/go.uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
+  version = "v1.2.0"
 
 [[projects]]
   digest = "1:bd1ae00087d17c5a748660b8e89e1043e1e5479d0fea743352cda2f8dd8c4f84"
@@ -276,6 +304,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/beevik/etree",
+    "github.com/damianoneill/net/netconf",
     "github.com/gocarina/gocsv",
     "github.com/olekukonko/tablewriter",
     "github.com/spf13/cobra",
