@@ -2,14 +2,6 @@
 
 
 [[projects]]
-  branch = "master"
-  digest = "1:1c5ee0349158e2077d178c733d1a0d17017ae72d60947fe32b0bfbbf0f69b4da"
-  name = "github.com/Juniper/go-netconf"
-  packages = ["netconf"]
-  pruneopts = "UT"
-  revision = "ecb605886691227fdb469b26675560046ee8bab9"
-
-[[projects]]
   digest = "1:f25dfe4538112147d22e4c8437efbc2e216112bec37277534ffe146935064ea8"
   name = "github.com/beevik/etree"
   packages = ["."]
@@ -212,7 +204,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:4149698a962789474b8651ad5bea772137e72fe23ee3a8e3c65045bf5c5a3be5"
+  digest = "1:1922d177ca458baf48c2bf730493d9b09df4090c8e478bd0777ae253bf47985b"
   name = "golang.org/x/crypto"
   packages = [
     "curve25519",
@@ -222,7 +214,6 @@
     "internal/subtle",
     "poly1305",
     "ssh",
-    "ssh/agent",
   ]
   pruneopts = "UT"
   revision = "a521dfce2584b08efb1ec3eab94c05254dcf8f09"
@@ -284,7 +275,6 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/Juniper/go-netconf/netconf",
     "github.com/beevik/etree",
     "github.com/gocarina/gocsv",
     "github.com/olekukonko/tablewriter",

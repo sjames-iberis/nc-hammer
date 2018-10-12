@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Juniper/go-netconf/netconf"
 	"github.com/damianoneill/nc-hammer/result"
 	"github.com/damianoneill/nc-hammer/suite"
 	"golang.org/x/crypto/ssh"
