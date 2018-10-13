@@ -10,6 +10,7 @@ import (
 
 	"github.com/damianoneill/nc-hammer/result"
 	"github.com/damianoneill/nc-hammer/suite"
+	"github.com/damianoneill/net/netconf"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

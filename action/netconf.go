@@ -8,6 +8,7 @@ import (
 
 	"github.com/damianoneill/nc-hammer/result"
 	"github.com/damianoneill/nc-hammer/suite"
+	"github.com/damianoneill/net/netconf"
 	"golang.org/x/crypto/ssh"
 )
 
@@ -16,10 +17,10 @@ type Transport interface {
 	netconf.Transport
 }
 
-var gSessions map[string]*netconf.Session
+var gSessions map[string]netconf.Session
 
 func init() {
-	gSessions = make(map[string]*netconf.Session)
+	gSessions = make(map[string]netconf.Session)
 }
 
 // CloseAllSessions is called on exit to gracefully close the sockets
@@ -60,7 +61,7 @@ func ExecuteNetconf(tsStart time.Time, cID int, action suite.Action, config *sui
 	}
 
 	if session != nil {
-		result.SessionID = session.SessionID
+		result.SessionID = session.ID()
 	} else {
 		fmt.Printf("E")
 		result.Err = "session has expired"
@@ -76,9 +77,9 @@ func ExecuteNetconf(tsStart time.Time, cID int, action suite.Action, config *sui
 		return
 	}
 
-	raw := netconf.RawMethod(xml)
+	raw := netconf.Request(xml)
 	start := time.Now()
-	rpcReply, err := session.Exec(raw)
+	rpcReply, err := session.Execute(raw)
 	if err != nil {
 		if err.Error() == "WaitForFunc failed" {
 			delete(gSessions, strconv.Itoa(cID)+config.Hostname+":"+strconv.Itoa(config.Port))
@@ -115,7 +116,7 @@ func ExecuteNetconf(tsStart time.Time, cID int, action suite.Action, config *sui
 }
 
 // getSession returns a NETCONF Session, either a new one or a pre existing one if resuseConnection is valid for client/host
-func getSession(client int, hostname, username, password string, reuseConnection bool) (*netconf.Session, error) {
+func getSession(client int, hostname, username, password string, reuseConnection bool) (netconf.Session, error) {
 	// check if hostname should reuse connection
 	if reuseConnection {
 		// get Session from Map if present
@@ -133,11 +134,11 @@ func getSession(client int, hostname, username, password string, reuseConnection
 	return createNewSession(hostname, username, password)
 }
 
-var createNewSession = func(hostname, username, password string) (*netconf.Session, error) {
+var createNewSession = func(hostname, username, password string) (netconf.Session, error) {
 	sshConfig := &ssh.ClientConfig{
 		User:            username,
 		Auth:            []ssh.AuthMethod{ssh.Password(password)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
-	return netconf.DialSSH(hostname, sshConfig)
+	return netconf.NewRPCSession(sshConfig, hostname)
 }
