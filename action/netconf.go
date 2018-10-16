@@ -17,6 +17,8 @@ var (
 	diagnosticContext context.Context = context.Background()
 )
 
+// CreateDiagnosticContext creates a context used for instantiating new Netconf sessions, with the option
+// of enabling netconf client diagnostics (diagFlag == true).
 func CreateDiagnosticContext(diagFlag bool) {
 	var trace *netconf.ClientTrace
 	if diagFlag {
@@ -25,11 +27,6 @@ func CreateDiagnosticContext(diagFlag bool) {
 		trace = netconf.DefaultLoggingHooks
 	}
 	diagnosticContext = netconf.WithClientTrace(diagnosticContext, trace)
-}
-
-// Transport interface used for mockTransport in test
-type Transport interface {
-	netconf.Transport
 }
 
 var gSessions map[string]netconf.Session
