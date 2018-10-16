@@ -1,6 +1,7 @@
 package action
 
 import (
+	"encoding/xml"
 	"errors"
 	"io/ioutil"
 	"os"
@@ -13,6 +14,8 @@ import (
 	"github.com/damianoneill/net/netconf"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+
+	"github.com/damianoneill/nc-hammer/mocks/github.com/damianoneill/net/netconf"
 )
 
 //helper function to capture ExecuteNetconf output
@@ -38,30 +41,27 @@ func captureStdoutE(sessionID int) string {
 	return st
 }
 func Test_ExecuteNetconf(t *testing.T) {
-	hello := new(netconf.HelloMessage)
-	hello.SessionID = 0
-	hello.Capabilities = []string{"urn:ietf:params:netconf:base:1.0"}
 	validRPCReply := []byte("<rpc-reply xmlns=\"URN\" xmlns:junos=\"URL\"><ko/></rpc-reply>]]>]]>")          // does not match *action.Netconf.Expected
 	validRPCReplyPassCheck := []byte("<rpc-reply xmlns=\"URN\" xmlns:junos=\"URL\"><ok/></rpc-reply>]]>]]>") // matches *action.Netconf.Expected
 	invalidRPCReply := []byte("xmlns=\"URN\" xmlns:")
 
-	mockTransport := &MockTransport{}
+	mockSession := &mocks.Session{}
 
 	// helper function passes calls to mock, overrrides createNewSession
 	callMock := func(r []byte) {
-		mockTransport.On("ReceiveHello").Return(hello, nil)
-		mockTransport.On("SendHello", hello).Return(nil)
-		mockTransport.On("Receive").Return(r, nil).Once()
-		mockTransport.On("Send", mock.Anything).Return(nil)
 
-		createNewSession = func(hostname, username, password string) (*netconf.Session, error) {
-			mySession := netconf.NewSession(mockTransport)
-			return mySession, nil
+		reply := &netconf.RPCReply{}
+		xml.Unmarshal(r, reply)
+		mockSession.On("Execute", mock.Anything).Return(reply, nil).Once()
+		mockSession.On("ID").Return(75)
+
+		createNewSession = func(hostname, username, password string) (netconf.Session, error) {
+			return mockSession, nil
 		}
 	}
 
 	t.Run("createNewSession(..) returns nil err and nil session", func(t *testing.T) {
-		createNewSession = func(hostname, username, password string) (*netconf.Session, error) {
+		createNewSession = func(hostname, username, password string) (netconf.Session, error) {
 			return nil, nil
 		}
 		got := captureStdoutE(0)
@@ -69,7 +69,7 @@ func Test_ExecuteNetconf(t *testing.T) {
 	})
 
 	t.Run("createNewSession(..) returns an error", func(t *testing.T) {
-		createNewSession = func(hostname, username, password string) (*netconf.Session, error) {
+		createNewSession = func(hostname, username, password string) (netconf.Session, error) {
 			err := errors.New("error creating a netconf session")
 			return nil, err
 		}

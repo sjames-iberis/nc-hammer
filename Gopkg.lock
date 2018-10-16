@@ -11,14 +11,14 @@
 
 [[projects]]
   branch = "feature/message_hooks"
-  digest = "1:c4ef0fbd94cb1882a2e787d13dbbc2bf421733c9e338ea778489daedbd89e52c"
+  digest = "1:ba52e5522a0dfbda0539f7f0c7468facda03eda82bfaafb2c1f7fe047d2818c2"
   name = "github.com/damianoneill/net"
   packages = [
     "netconf",
     "netconf/rfc6242",
   ]
   pruneopts = "UT"
-  revision = "0d18f8210b475f11de7bc3978fa84b8cdf5d6c04"
+  revision = "69bfb30f9ea2efa488c386564bf6dcb0df08166e"
   source = "github.com/sjames-iberis/net"
 
 [[projects]]

@@ -13,6 +13,20 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
+var (
+	diagnosticContext context.Context = context.Background()
+)
+
+func CreateDiagnosticContext(diagFlag bool) {
+	var trace *netconf.ClientTrace
+	if diagFlag {
+		trace = netconf.DiagnosticLoggingHooks
+	} else {
+		trace = netconf.DefaultLoggingHooks
+	}
+	diagnosticContext = netconf.WithClientTrace(diagnosticContext, trace)
+}
+
 // Transport interface used for mockTransport in test
 type Transport interface {
 	netconf.Transport
@@ -142,6 +156,5 @@ var createNewSession = func(hostname, username, password string) (netconf.Sessio
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
-	ctx := netconf.WithClientTrace(context.Background(), netconf.DefaultLoggingHooks)
-	return netconf.NewRPCSession(ctx, sshConfig, hostname)
+	return netconf.NewRPCSession(diagnosticContext, sshConfig, hostname)
 }
