@@ -1,6 +1,7 @@
 package action
 
 import (
+	"context"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -140,5 +141,7 @@ var createNewSession = func(hostname, username, password string) (netconf.Sessio
 		Auth:            []ssh.AuthMethod{ssh.Password(password)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
-	return netconf.NewRPCSession(sshConfig, hostname)
+
+	ctx := netconf.WithClientTrace(context.Background(), netconf.DefaultLoggingHooks)
+	return netconf.NewRPCSession(ctx, sshConfig, hostname)
 }

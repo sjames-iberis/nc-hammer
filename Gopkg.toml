@@ -25,8 +25,9 @@
 #   unused-packages = true
 
 [[constraint]]
-  branch = "master"
+  branch = "feature/message_hooks"
   name = "github.com/damianoneill/net"
+  source = "github.com/sjames-iberis/net"
 
 [[constraint]]
   name = "github.com/beevik/etree"
