@@ -95,3 +95,17 @@ func Test_ExecuteNetconf(t *testing.T) {
 		assert.True(t, strings.Contains(got, ".") || strings.Contains(got, ""))
 	})
 }
+
+func Test_NetconfDiagnosticContext(t *testing.T) {
+	defaultContext := diagnosticContext
+
+	CreateDiagnosticContext(false)
+	nonDiagContext := diagnosticContext
+
+	CreateDiagnosticContext(true)
+	diagContext := diagnosticContext
+
+	assert.Nil(t, netconf.ContextClientTrace(defaultContext), "Expect default context not to enable diagnostics")
+	assert.Equal(t, netconf.DefaultLoggingHooks, netconf.ContextClientTrace(nonDiagContext), "Expect context not to enable diagnostics")
+	assert.Equal(t, netconf.DiagnosticLoggingHooks, netconf.ContextClientTrace(diagContext), "Expect context to enable diagnostics")
+}
