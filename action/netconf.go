@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	diagnosticContext context.Context = context.Background()
+	diagnosticContext = context.Background()
 )
 
 // CreateDiagnosticContext creates a context used for instantiating new Netconf sessions, with the option

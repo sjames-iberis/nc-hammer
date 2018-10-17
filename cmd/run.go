@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	diagFlag bool = false
+	diagFlag = false
 )
 
 // runCmd represents the run command
