@@ -51,8 +51,8 @@ func Test_ExecuteNetconf(t *testing.T) {
 	callMock := func(r []byte) {
 
 		reply := &netconf.RPCReply{}
-		xml.Unmarshal(r, reply)
-		mockSession.On("Execute", mock.Anything).Return(reply, nil).Once()
+		err := xml.Unmarshal(r, reply)
+		mockSession.On("Execute", mock.Anything).Return(reply, err).Once()
 		mockSession.On("ID").Return(75)
 
 		createNewSession = func(hostname, username, password string) (netconf.Session, error) {
