@@ -11,14 +11,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5f6aed663396bcee4e1289ccd960193f9bde88c9165979fe06ea3b20ee5e483e"
+  digest = "1:12d19853c3f9bb45c56470b8f8206a81ca48f467b548359806a45d70e189ea73"
   name = "github.com/damianoneill/net"
   packages = [
     "netconf",
     "netconf/rfc6242",
   ]
   pruneopts = "UT"
-  revision = "58f2a418a4bb1683523185cbe7b3f4b5bdad67e3"
+  revision = "02ca30f56c5794a5965f9376128aff050d80bc9e"
 
 [[projects]]
   digest = "1:a2c1d0e43bd3baaa071d1b9ed72c27d78169b2b269f71c105ac4ba34b1be4a39"
